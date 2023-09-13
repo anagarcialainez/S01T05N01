@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class Directorios4 {
     //variable para guardar el contenido del archivo de salida
     private BufferedWriter writer;
-    public void directorioOrdenado(String rutaDirectorio, String archivoSalida){
+    public void directorioOrdenado(String rutaDirectorio, String archivoSalida) throws IOException {
         try {
             //indicamos la apertura del archivo de salida para su escritura
             writer = new BufferedWriter(new FileWriter(archivoSalida));
@@ -20,9 +20,10 @@ public class Directorios4 {
                 //lista recursivamente el contenido del directorio, con la cadena vacia
                 mostrarContenidoRecursivo(directorio, " ");
             }
-            writer.close();
         }catch (IOException e){
             e.printStackTrace();
+        }finally {
+            writer.close();
         }
     }
     public void mostrarContenidoRecursivo(File directorio, String prefijo) throws IOException {

@@ -19,7 +19,7 @@ public class Directorios5 implements Serializable {
 
     //variable para guardar el contenido del archivo de salida
     private BufferedWriter writer;
-    public void directorioOrdenado(String rutaDirectorio, String archivoSalida){
+    public void OrdenarDirectorio(String rutaDirectorio, String archivoSalida) throws IOException {
         try {
             //indicamos la apertura del archivo de salida para su escritura
             writer = new BufferedWriter(new FileWriter(archivoSalida));
@@ -29,9 +29,10 @@ public class Directorios5 implements Serializable {
                 //lista recursivamente el contenido del directorio, con la cadena vacia
                 mostrarContenidoRecursivo(directorio, " ");
             }
-            writer.close();
         }catch (IOException e){
             e.printStackTrace();
+        }finally {
+            writer.close();
         }
     }
     public void mostrarContenidoRecursivo(File directorio, String prefijo) throws IOException {
@@ -59,30 +60,37 @@ public class Directorios5 implements Serializable {
         return formatoFecha.format(archivo.lastModified());
     }
 
-    public void serializarObjeto(Object objeto, String archivo){
+    public void serializarObjeto(Object objeto, String archivo) throws IOException {
+        ObjectOutputStream salida = null;
+        FileOutputStream archivoSalida = null;
         try {
-            FileOutputStream archivoSalida = new FileOutputStream(archivo);
-            ObjectOutputStream salida = new ObjectOutputStream(archivoSalida);
+            archivoSalida = new FileOutputStream(archivo);
+            salida = new ObjectOutputStream(archivoSalida);
             salida.writeObject(objeto);
+            System.out.println("Objeto serializado en: " + archivo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
             salida.close();
             archivoSalida.close();
-            System.out.println("Objeto serializado en: " + archivo);
-        }catch (IOException e){
-            e.printStackTrace();
         }
     }
 
-    public Object deserializarObjeto(String archivo){
+    public Object deserializarObjeto(String archivo) throws IOException {
         Object objetoDeserializado = null;
+        ObjectInputStream entrada = null;
+        FileInputStream archivoEntrada = null;
 
         try {
-            FileInputStream archivoEntrada = new FileInputStream(archivo);
-            ObjectInputStream entrada = new ObjectInputStream(archivoEntrada);
+            archivoEntrada = new FileInputStream(archivo);
+            entrada = new ObjectInputStream(archivoEntrada);
             objetoDeserializado = entrada.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
             entrada.close();
             archivoEntrada.close();
-        }catch (IOException | ClassNotFoundException e){
-            e.printStackTrace();
         }
 
         return objetoDeserializado;

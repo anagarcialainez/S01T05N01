@@ -4,17 +4,19 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class LeerArchivoTxt {
-    public void mostrarContenidoArchivo(String rutaArchivo){
+public class LectorArchivoTxt {
+    public void mostrarContenidoArchivo(String rutaArchivo) throws IOException {
+        BufferedReader reader = null;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo));
+            reader = new BufferedReader(new FileReader(rutaArchivo));
             String linea;
             while ((linea = reader.readLine()) != null) {
                 System.out.println(linea);
             }
-            reader.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            reader.close();
         }
     }
 }
