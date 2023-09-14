@@ -96,4 +96,19 @@ public class Directorios5 implements Serializable {
         return objetoDeserializado;
     }
 
+    public void mostrarContenidoArchivo(String rutaArchivo) throws IOException {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(rutaArchivo));
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                System.out.println(linea);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            reader.close();
+        }
+    }
+
 }

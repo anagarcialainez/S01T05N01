@@ -15,7 +15,7 @@ public class MainDirectorio5 {
 
         try {
             String rutaArchivo = "src/main/java/s01n01ex4/Countries.txt";
-            LectorArchivoTxt leerArchivo = new LectorArchivoTxt();
+            Directorios5 leerArchivo = new Directorios5();
             leerArchivo.mostrarContenidoArchivo(rutaArchivo);
         } catch (IOException e) {
             throw new RuntimeException(e);
